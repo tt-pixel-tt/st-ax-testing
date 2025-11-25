@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adult Speech Therapy Assessment</title>
+    <style>
+        :root {
+            --primary: #2c5aa0;
+            --secondary: #4a8fe7;
+            --light: #f0f5ff;
+            --dark: #333;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 30px;
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background-color: var(--light);
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .section-number {
+            background-color: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .section-content {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .form-col {
+            flex: 1;
+            padding: 0 10px;
+            min-width: 250px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(74, 143, 231, 0.2);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input, .checkbox-option input {
+            margin-right: 8px;
+        }
+        
+        .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .rating-option {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            margin-bottom: 10px;
+        }
+        
+        .rating-option input {
+            margin-bottom: 5px;
+        }
+        
+        .observation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .observation-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .observation-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            background-color: #1e4680;
+        }
+        
+        .btn-reset {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            background-color: #545b62;
+        }
+        
+        .required:after {
+            content: " *";
+            color: var(--danger);
+        }
+        
+        .severity-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .severity-normal { background-color: var(--success); }
+        .severity-mild { background-color: #ffc107; }
+        .severity-moderate { background-color: #fd7e14; }
+        .severity-severe { background-color: var(--danger); }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .form-col {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .rating-scale {
+                flex-direction: column;
+            }
+            
+            .rating-option {
+                width: 100%;
+                text-align: left;
+                display: flex;
+                align-items: center;
+            }
+            
+            .rating-option input {
+                margin-right: 10px;
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Adult Speech Therapy Assessment</h1>
+            <p class="subtitle">Comprehensive evaluation of communication, swallowing, and oromotor function</p>
+        </header>
+        
+        <div class="form-container">
+            <form id="speechAssessmentForm">
+                <!-- Patient Information Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-title">Patient Information</div>
+                        <div class="section-number">1</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="patientName" class="required">Full Name</label>
+                                    <input type="text" id="patientName" name="patientName" required>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="dob" class="required">Date of Birth</label>
+                                    <input type="date" id="dob" name="dob" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="medicalRecord" class="required">Medical Record Number</label>
+                                    <input type="text" id="medicalRecord" name="medicalRecord" required>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="assessmentDate" class="required">Assessment Date</label>
+                                    <input type="date" id="assessmentDate" name="assessmentDate" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="referringPhysician">Referring Physician</label>
+                            <input type="text" id="referringPhysician" name="referringPhysician">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="medicalDiagnosis">Medical Diagnosis/Reason for Referral</label>
+                            <textarea id="medicalDiagnosis" name="medicalDiagnosis"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- General Condition Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-title">General Condition</div>
+                        <div class="section-number">2</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="arousalLevel">Arousal Level</label>
+                                    <select id="arousalLevel" name="arousalLevel">
+                                        <option value="">Select Level</option>
+                                        <option value="alert">Alert and Responsive</option>
+                                        <option value="lethargic">Lethargic</option>
+                                        <option value="obtunded">Obtunded</option>
+                                        <option value="stuporous">Stuporous</option>
+                                        <option value="comatose">Comatose</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="bodyTemp">Body Temperature</label>
+                                    <input type="text" id="bodyTemp" name="bodyTemp" placeholder="e.g., 37.2°C">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Respiratory Condition</label>
+                            <div class="observation-grid">
+                                <div class="observation-item">
+                                    <div class="observation-title">Respiratory Rate</div>
+                                    <input type="text" id="respiratoryRate" name="respiratoryRate" placeholder="breaths per minute">
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Oxygen Saturation</div>
+                                    <input type="text" id="oxygenSaturation" name="oxygenSaturation" placeholder="e.g., 98%">
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Breathing Pattern</div>
+                                    <select id="breathingPattern" name="breathingPattern">
+                                        <option value="">Select Pattern</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="irregular">Irregular</option>
+                                        <option value="labored">Labored</option>
+                                        <option value="shallow">Shallow</option>
+                                        <option value="deep">Deep</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Tracheostomy</div>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="trachYes" name="tracheostomy" value="yes">
+                                            <label for="trachYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="trachNo" name="tracheostomy" value="no">
+                                            <label for="trachNo">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Current Feeding Mode / Oral Intake</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="feedingOral" name="feedingMode" value="oral">
+                                    <label for="feedingOral">Oral</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="feedingNgt" name="feedingMode" value="ngt">
+                                    <label for="feedingNgt">Nasogastric Tube (NGT)</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="feedingPeg" name="feedingMode" value="peg">
+                                    <label for="feedingPeg">PEG/J-tube</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="feedingParenteral" name="feedingMode" value="parenteral">
+                                    <label for="feedingParenteral">Parenteral</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="feedingNone" name="feedingMode" value="none">
+                                    <label for="feedingNone">NPO</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Communication Assessment Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-title">Communication Assessment</div>
+                        <div class="section-number">3</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label>Receptive Language Ability</label>
+                            <div class="observation-grid">
+                                <div class="observation-item">
+                                    <div class="observation-title">Auditory Comprehension</div>
+                                    <select id="auditoryComp" name="auditoryComp">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Impairment</option>
+                                        <option value="moderate">Moderate Impairment</option>
+                                        <option value="severe">Severe Impairment</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Following Commands</div>
+                                    <select id="followingCommands" name="followingCommands">
+                                        <option value="">Select Level</option>
+                                        <option value="complex">Complex Commands</option>
+                                        <option value="simple">Simple Commands</option>
+                                        <option value="one-step">One-Step Commands</option>
+                                        <option value="gestural">Gestural Cues Needed</option>
+                                        <option value="unable">Unable</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Reading Comprehension</div>
+                                    <select id="readingComp" name="readingComp">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Impairment</option>
+                                        <option value="moderate">Moderate Impairment</option>
+                                        <option value="severe">Severe Impairment</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Expressive Language Ability</label>
+                            <div class="observation-grid">
+                                <div class="observation-item">
+                                    <div class="observation-title">Verbal Expression</div>
+                                    <select id="verbalExpression" name="verbalExpression">
+                                        <option value="">Select Level</option>
+                                        <option value="fluent">Fluent</option>
+                                        <option value="nonfluent">Non-fluent</option>
+                                        <option value="telegraphic">Telegraphic</option>
+                                        <option value="single-words">Single Words Only</option>
+                                        <option value="automatic">Automatic Speech Only</option>
+                                        <option value="none">No Verbal Output</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Naming Ability</div>
+                                    <select id="namingAbility" name="namingAbility">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Anomia</option>
+                                        <option value="moderate">Moderate Anomia</option>
+                                        <option value="severe">Severe Anomia</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Repetition</div>
+                                    <select id="repetition" name="repetition">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Impairment</option>
+                                        <option value="moderate">Moderate Impairment</option>
+                                        <option value="severe">Severe Impairment</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Writing Ability</div>
+                                    <select id="writingAbility" name="writingAbility">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Impairment</option>
+                                        <option value="moderate">Moderate Impairment</option>
+                                        <option value="severe">Severe Impairment</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Speech - Articulatory Precision</label>
+                            <div class="observation-grid">
+                                <div class="observation-item">
+                                    <div class="observation-title">Speech Intelligibility</div>
+                                    <select id="intelligibility" name="intelligibility">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal (100%)</option>
+                                        <option value="mild">Mild Impairment (75-99%)</option>
+                                        <option value="moderate">Moderate Impairment (50-74%)</option>
+                                        <option value="severe">Severe Impairment (25-49%)</option>
+                                        <option value="profound">Profound Impairment (<25%)</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Articulation</div>
+                                    <select id="articulation" name="articulation">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Dysarthria</option>
+                                        <option value="moderate">Moderate Dysarthria</option>
+                                        <option value="severe">Severe Dysarthria</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Apraxia of Speech</div>
+                                    <select id="apraxia" name="apraxia">
+                                        <option value="">Select Severity</option>
+                                        <option value="none">None</option>
+                                        <option value="mild">Mild</option>
+                                        <option value="moderate">Moderate</option>
+                                        <option value="severe">Severe</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Voice (Vocal Qualities)</label>
+                            <div class="observation-grid">
+                                <div class="observation-item">
+                                    <div class="observation-title">Voice Quality</div>
+                                    <select id="voiceQuality" name="voiceQuality">
+                                        <option value="">Select Quality</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="breathy">Breathy</option>
+                                        <option value="hoarse">Hoarse</option>
+                                        <option value="strained">Strained</option>
+                                        <option value="rough">Rough</option>
+                                        <option value="tremorous">Tremorous</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Pitch</div>
+                                    <select id="pitch" name="pitch">
+                                        <option value="">Select Quality</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="high">Abnormally High</option>
+                                        <option value="low">Abnormally Low</option>
+                                        <option value="monotone">Monotone</option>
+                                        <option value="unstable">Unstable</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Loudness</div>
+                                    <select id="loudness" name="loudness">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="soft">Too Soft</option>
+                                        <option value="loud">Too Loud</option>
+                                        <option value="monoloud">Monoloud</option>
+                                        <option value="unstable">Unstable</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Resonance</div>
+                                    <select id="resonance" name="resonance">
+                                        <option value="">Select Type</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="hypernasal">Hypernasal</option>
+                                        <option value="hyponasal">Hyponasal</option>
+                                        <option value="cul-de-sac">Cul-de-sac</option>
+                                        <option value="mixed">Mixed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Oromotor Examination Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-title">Oromotor Examination</div>
+                        <div class="section-number">4</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label>Oral Structure & Function</label>
+                            <div class="observation-grid">
+                                <div class="observation-item">
+                                    <div class="observation-title">Lip Strength/Seal</div>
+                                    <select id="lipStrength" name="lipStrength">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Weakness</option>
+                                        <option value="moderate">Moderate Weakness</option>
+                                        <option value="severe">Severe Weakness</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Tongue Strength/Mobility</div>
+                                    <select id="tongueStrength" name="tongueStrength">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Impairment</option>
+                                        <option value="moderate">Moderate Impairment</option>
+                                        <option value="severe">Severe Impairment</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Jaw Strength/Control</div>
+                                    <select id="jawStrength" name="jawStrength">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Impairment</option>
+                                        <option value="moderate">Moderate Impairment</option>
+                                        <option value="severe">Severe Impairment</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Palatal Movement</div>
+                                    <select id="palatalMovement" name="palatalMovement">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal/Symmetric</option>
+                                        <option value="mild">Mild Weakness</option>
+                                        <option value="moderate">Moderate Weakness</option>
+                                        <option value="severe">Severe Weakness/Asymmetric</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Oral Sensation</div>
+                                    <select id="oralSensation" name="oralSensation">
+                                        <option value="">Select Level</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="mild">Mild Impairment</option>
+                                        <option value="moderate">Moderate Impairment</option>
+                                        <option value="severe">Severe Impairment</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Oral Reflexes</div>
+                                    <select id="oralReflexes" name="oralReflexes">
+                                        <option value="">Select Status</option>
+                                        <option value="normal">Normal/Appropriate</option>
+                                        <option value="increased">Increased</option>
+                                        <option value="decreased">Decreased</option>
+                                        <option value="absent">Absent</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="oromotorObservations">Additional Oromotor Observations</label>
+                            <textarea id="oromotorObservations" name="oromotorObservations" placeholder="Note any fasciculations, atrophy, asymmetry, or other observations"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feeding and Oral Trials Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-title">Feeding and Oral Trials</div>
+                        <div class="section-number">5</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label>Oral Trials - Observations</label>
+                            <div class="observation-grid">
+                                <div class="observation-item">
+                                    <div class="observation-title">Lip Closure</div>
+                                    <select id="lipClosure" name="lipClosure">
+                                        <option value="">Select Ability</option>
+                                        <option value="complete">Complete</option>
+                                        <option value="incomplete">Incomplete</option>
+                                        <option value="absent">Absent</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Bolus Formation</div>
+                                    <select id="bolusFormation" name="bolusFormation">
+                                        <option value="">Select Ability</option>
+                                        <option value="efficient">Efficient</option>
+                                        <option value="inefficient">Inefficient</option>
+                                        <option value="absent">Absent</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Mastication</div>
+                                    <select id="mastication" name="mastication">
+                                        <option value="">Select Ability</option>
+                                        <option value="effective">Effective</option>
+                                        <option value="ineffective">Ineffective</option>
+                                        <option value="absent">Absent</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Oral Transit Time</div>
+                                    <select id="oralTransit" name="oralTransit">
+                                        <option value="">Select Timing</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="delayed">Delayed</option>
+                                        <option value="prolonged">Prolonged</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Oral Residue</div>
+                                    <select id="oralResidue" name="oralResidue">
+                                        <option value="">Select Amount</option>
+                                        <option value="none">None</option>
+                                        <option value="minimal">Minimal</option>
+                                        <option value="moderate">Moderate</option>
+                                        <option value="significant">Significant</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Anterior Loss</div>
+                                    <select id="anteriorLoss" name="anteriorLoss">
+                                        <option value="">Select Frequency</option>
+                                        <option value="none">None</option>
+                                        <option value="occasional">Occasional</option>
+                                        <option value="frequent">Frequent</option>
+                                        <option value="constant">Constant</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Swallowing Ability</label>
+                            <div class="observation-grid">
+                                <div class="observation-item">
+                                    <div class="observation-title">Pharyngeal Trigger</div>
+                                    <select id="pharyngealTrigger" name="pharyngealTrigger">
+                                        <option value="">Select Timing</option>
+                                        <option value="timely">Timely</option>
+                                        <option value="delayed">Delayed</option>
+                                        <option value="absent">Absent</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Laryngeal Elevation</div>
+                                    <select id="laryngealElevation" name="laryngealElevation">
+                                        <option value="">Select Movement</option>
+                                        <option value="adequate">Adequate</option>
+                                        <option value="reduced">Reduced</option>
+                                        <option value="absent">Absent</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Pharyngeal Residue</div>
+                                    <select id="pharyngealResidue" name="pharyngealResidue">
+                                        <option value="">Select Amount</option>
+                                        <option value="none">None</option>
+                                        <option value="minimal">Minimal</option>
+                                        <option value="moderate">Moderate</option>
+                                        <option value="significant">Significant</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Penetration/Aspiration</div>
+                                    <select id="penetrationAspiration" name="penetrationAspiration">
+                                        <option value="">Select Level</option>
+                                        <option value="none">None</option>
+                                        <option value="penetration">Penetration</option>
+                                        <option value="aspiration">Aspiration</option>
+                                        <option value="silent">Silent Aspiration</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Cough Response</div>
+                                    <select id="coughResponse" name="coughResponse">
+                                        <option value="">Select Effectiveness</option>
+                                        <option value="effective">Effective</option>
+                                        <option value="weak">Weak</option>
+                                        <option value="absent">Absent</option>
+                                    </select>
+                                </div>
+                                <div class="observation-item">
+                                    <div class="observation-title">Voice Quality Post-Swallow</div>
+                                    <select id="voicePostSwallow" name="voicePostSwallow">
+                                        <option value="">Select Quality</option>
+                                        <option value="clear">Clear</option>
+                                        <option value="wet">Wet/Gurgly</option>
+                                        <option value="weak">Weak</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="oralTrialsNotes">Oral Trials Notes</label>
+                            <textarea id="oralTrialsNotes" name="oralTrialsNotes" placeholder="Document specific foods/liquids trialed, patient response, and any signs of difficulty"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommendations Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-title">Recommendations</div>
+                        <div class="section-number">6</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label>Diet and Fluid Recommendations</label>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="dietTexture">Diet Texture</label>
+                                        <select id="dietTexture" name="dietTexture">
+                                            <option value="">Select Texture</option>
+                                            <option value="regular">Regular</option>
+                                            <option value="soft">Soft</option>
+                                            <option value="minced">Minced & Moist</option>
+                                            <option value="pureed">Pureed</option>
+                                            <option value="liquidized">Liquidized</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="fluidConsistency">Fluid Consistency</label>
+                                        <select id="fluidConsistency" name="fluidConsistency">
+                                            <option value="">Select Consistency</option>
+                                            <option value="thin">Thin</option>
+                                            <option value="nectar">Nectar-Thick</option>
+                                            <option value="honey">Honey-Thick</option>
+                                            <option value="pudding">Pudding-Thick</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="feedingRecommendations">Feeding Recommendations</label>
+                                <textarea id="feedingRecommendations" name="feedingRecommendations" placeholder="Recommendations regarding feeding techniques, positioning, supervision, etc."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Communication Intervention Recommendations</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="recSpeechTherapy" name="recSpeechTherapy" value="yes">
+                                    <label for="recSpeechTherapy">Speech-Language Therapy</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="recSwallowTherapy" name="recSwallowTherapy" value="yes">
+                                    <label for="recSwallowTherapy">Swallowing Therapy</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="recAAC" name="recAAC" value="yes">
+                                    <label for="recAAC">Augmentative & Alternative Communication (AAC)</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="recVoiceTherapy" name="recVoiceTherapy" value="yes">
+                                    <label for="recVoiceTherapy">Voice Therapy</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="recCognitiveTherapy" name="recCognitiveTherapy" value="yes">
+                                    <label for="recCognitiveTherapy">Cognitive-Linguistic Therapy</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="therapyFrequency">Recommended Therapy Frequency</label>
+                                <select id="therapyFrequency" name="therapyFrequency">
+                                    <option value="">Select Frequency</option>
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly3">3x/week</option>
+                                    <option value="weekly2">2x/week</option>
+                                    <option value="weekly1">1x/week</option>
+                                    <option value="biweekly">Bi-weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="prn">PRN/As needed</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="additionalRecommendations">Additional Recommendations</label>
+                                <textarea id="additionalRecommendations" name="additionalRecommendations" placeholder="Any other recommendations, precautions, or follow-up needs"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Therapist Information Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-title">Therapist Information</div>
+                        <div class="section-number">7</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="therapistName" class="required">Therapist Name</label>
+                                    <input type="text" id="therapistName" name="therapistName" required>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="therapistCredentials" class="required">Credentials</label>
+                                    <input type="text" id="therapistCredentials" name="therapistCredentials" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="therapistSignature" class="required">Therapist Signature</label>
+                            <input type="text" id="therapistSignature" name="therapistSignature" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Form Buttons -->
+                <div class="btn-group">
+                    <button type="reset" class="btn-reset">Reset Form</button>
+                    <button type="submit" class="btn-submit">Submit Assessment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('speechAssessmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic form validation
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#dc3545';
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (isValid) {
+                alert('Assessment form submitted successfully!');
+                // In a real application, you would send the form data to a server here
+                // this.submit();
+            } else {
+                alert('Please fill in all required fields marked with *');
+            }
+        });
+        
+        // Set today's date as default for assessment date
+        document.getElementById('assessmentDate').valueAsDate = new Date();
+        
+        // Add visual feedback for radio and checkbox selections
+        const allInputs = document.querySelectorAll('input, select, textarea');
+        allInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#4a8fe7';
+                this.style.boxShadow = '0 0 0 2px rgba(74, 143, 231, 0.2)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.boxShadow = 'none';
+                if (!this.hasAttribute('required') || this.value.trim()) {
+                    this.style.borderColor = '#ddd';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
